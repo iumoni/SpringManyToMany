@@ -1,0 +1,16 @@
+¿Cómo afectará JPA a la base de datos? y ¿Qué tabla creará y qué columnas tendrá?
+JPA detectará la relación de muchos a muchos y creará automáticamente una tabla intermedia llamada producto_deparments en la base de datos. Esta tabla tendrá dos columnas principales para relacionar ambos lados: product_id y deparments_id.
+
+Investiga qué significa la anotación @JsonIgnore y explica por qué crees que se utiliza en Producto.
+Sirve para indicarle a Spring que ignore ese campo al momento de convertir los objetos Java a JSON. Se utiliza para evitar un bucle infinito (referencia circular), ya que un producto tiene departamentos, y a su vez cada departamento tiene
+productos; sin @JsonIgnore, la aplicación se saturaría intentando serializar ambos lados indefinidamente.
+
+Observa el endpoint addProductoCategoria/{productId}/{categoriaId}, analiza el código y responde:
+
+¿Cuál crees que es su función?
+Su función es vincular o asociar un producto existente a una categoría (departamento) mediante sus respectivos identificadores (productId y categoriaId). Busca ambos elementos en la base de datos, añade el producto al conjunto de productos
+del departamento y guarda los cambios para que se registre la relación en la tabla intermedia.
+
+¿Por qué se declaran dos repositorios: uno de tipo categoriaRepo y otro de tipo productoRepo?
+Porque se está gestionando una relación de muchos a muchos (Many-to-Many) entre dos entidades completamente independientes (Department y Producto). Se necesita el categoriaRepo para consultar y guardar los departamentos, y el productoRepo
+para buscar el producto específico que se quiere asociar a dicho departamento.
